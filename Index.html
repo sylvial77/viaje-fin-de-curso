@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Tu Viaje Fin de Curso</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);font-family:'Segoe UI',sans-serif;display:flex;align-items:center;justify-content:center;padding:20px}
+.blob1{position:fixed;top:10%;left:5%;width:300px;height:300px;background:rgba(139,92,246,.2);border-radius:50%;filter:blur(80px);pointer-events:none}
+.blob2{position:fixed;bottom:10%;right:5%;width:400px;height:400px;background:rgba(236,72,153,.15);border-radius:50%;filter:blur(80px);pointer-events:none}
+.wrap{position:relative;width:100%;max-width:500px}
+.hdr{text-align:center;margin-bottom:28px}
+.hdr .ico{font-size:46px;display:block;margin-bottom:6px}
+.hdr h1{color:#fff;font-size:26px;font-weight:900}
+.hdr p{color:rgba(255,255,255,.5);font-size:13px;margin-top:4px}
+.card{background:rgba(255,255,255,.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:26px;box-shadow:0 25px 50px rgba(0,0,0,.4)}
+.steps{display:flex;align-items:center;gap:6px;margin-bottom:18px}
+.sc{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;background:rgba(255,255,255,.1);color:rgba(255,255,255,.3);transition:all .3s}
+.sc.on{background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff;box-shadow:0 4px 15px rgba(139,92,246,.4)}
+.sl{flex:1;height:2px;background:rgba(255,255,255,.1);transition:all .3s}
+.sl.on{background:linear-gradient(90deg,#8b5cf6,#ec4899)}
+.slabel{color:rgba(255,255,255,.4);font-size:11px;text-transform:uppercase;letter-spacing:2px;margin-bottom:18px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fld{margin-bottom:14px}
+.fld label{color:rgba(255,255,255,.6);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;display:block;margin-bottom:6px}
+.fld input,.fld select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:12px 16px;color:#fff;font-size:14px;outline:none;transition:all .2s}
+.fld input::placeholder{color:rgba(255,255,255,.35)}
+.fld input:focus,.fld select:focus{border-color:#8b5cf6;background:rgba(255,255,255,.15)}
+.fld select option{color:#111;background:#fff}
+.err{color:#f472b6;font-size:12px;margin-top:4px;min-height:16px}
+.dcards{display:flex;gap:12px;margin-top:6px}
+.dcard{flex:1;border-radius:16px;padding:16px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);cursor:pointer;text-align:left;transition:all .2s;color:#fff}
+.dcard:hover{background:rgba(255,255,255,.13)}
+.dcard.on{background:linear-gradient(135deg,rgba(139,92,246,.4),rgba(236,72,153,.3));border-color:#8b5cf6;box-shadow:0 4px 20px rgba(139,92,246,.3)}
+.dcard .eico{font-size:26px;margin-bottom:6px;display:block}
+.dcard .nm{font-weight:700;font-size:15px}
+.dcard .ds{font-size:11px;color:rgba(255,255,255,.5);margin-top:2px}
+.tg{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.tb{padding:10px 18px;border-radius:12px;font-size:13px;font-weight:500;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);cursor:pointer;transition:all .2s}
+.tb:hover{background:rgba(255,255,255,.15)}
+.tb.on{background:#8b5cf6;border-color:#8b5cf6;color:#fff;box-shadow:0 4px 15px rgba(139,92,246,.4)}
+.btns{display:flex;gap:10px;margin-top:22px}
+.bbk{flex:1;padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.7);font-size:14px;cursor:pointer;transition:all .2s}
+.bbk:hover{background:rgba(255,255,255,.1)}
+.bnx{flex:1;padding:14px;border-radius:12px;background:linear-gradient(135deg,#8b5cf6,#ec4899);border:none;color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 4px 20px rgba(139,92,246,.4)}
+.bnx:hover{transform:scale(1.02);box-shadow:0 6px 25px rgba(139,92,246,.5)}
+.bnx:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.okbox{text-align:center;padding:20px 0}
+.okbox .big{font-size:54px;margin-bottom:10px;display:block}
+.okbox h2{color:#fff;font-size:22px;font-weight:900;margin-bottom:8px}
+.okbox p{color:rgba(255,255,255,.5);font-size:14px;margin-bottom:6px}
+.okbox .di{color:#a78bfa;font-size:14px;font-weight:600;margin-bottom:20px}
+.foot{text-align:center;color:rgba(255,255,255,.2);font-size:12px;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="blob1"></div>
+<div class="blob2"></div>
+<div class="wrap">
+  <div class="hdr">
+    <span class="ico">✈️</span>
+    <h1>Tu Viaje Fin de Curso</h1>
+    <p>Tu aventura empieza aqui</p>
+  </div>
+  <div class="card">
+    <div class="steps" id="steps">
+      <div class="sc on" id="sc1">1</div>
+      <div class="sl" id="sl1"></div>
+      <div class="sc" id="sc2">2</div>
+      <div class="sl" id="sl2"></div>
+      <div class="sc" id="sc3">3</div>
+    </div>
+    <div class="slabel" id="slabel">Tus datos</div>
+    <div id="fc"></div>
+  </div>
+  <div class="foot">2026 Tu Viaje Fin de Curso</div>
+</div>
+<script>
+var SURL = "https://script.google.com/macros/s/AKfycbzt_yyqLtOinfCsiJk2r-_W0Zd55PI2mLCWjRZw8vCJwjbloDezDsx5r1oOQ8NmUlSY/exec";
+var provs = ["Alava","Albacete","Alicante","Almeria","Asturias","Avila","Badajoz","Barcelona","Burgos","Caceres","Cadiz","Cantabria","Castellon","Ciudad Real","Cordoba","Cuenca","Girona","Granada","Guadalajara","Guipuzcoa","Huelva","Huesca","Islas Baleares","Jaen","La Coruna","La Rioja","Las Palmas","Leon","Lleida","Lugo","Madrid","Malaga","Murcia","Navarra","Ourense","Palencia","Pontevedra","Salamanca","Sta Cruz Tenerife","Segovia","Sevilla","Soria","Tarragona","Teruel","Toledo","Valencia","Valladolid","Vizcaya","Zamora","Zaragoza"];
+var semsByMonth = {"Junio":["Semana 1 (2-6 Jun)","Semana 2 (9-13 Jun)","Semana 3 (16-20 Jun)","Semana 4 (23-27 Jun)"],"Julio":["Semana 1 (1-4 Jul)","Semana 2 (7-11 Jul)","Semana 3 (14-18 Jul)","Semana 4 (21-25 Jul)"]};
+var step = 1;
+var d = {};
+
+function updSteps() {
+  var labs = ["","Tus datos","Tu viaje","Contacto"];
+  document.getElementById("slabel").textContent = labs[step];
+  for (var i = 1; i <= 3; i++) document.getElementById("sc"+i).className = step >= i ? "sc on" : "sc";
+  for (var j = 1; j <= 2; j++) document.getElementById("sl"+j).className = step > j ? "sl on" : "sl";
+}
+
+function setErr(id, msg) { var e = document.getElementById("e_"+id); if(e) e.textContent = msg || ""; }
+
+function render() {
+  updSteps();
+  var fc = document.getElementById("fc");
+  fc.innerHTML = "";
+
+  if (step === 1) {
+    fc.appendChild(makeStep1());
+  } else if (step === 2) {
+    fc.appendChild(makeStep2());
+  } else {
+    fc.appendChild(makeStep3());
+  }
+}
+
+function field(labelTxt, inputEl, errId) {
+  var f = document.createElement("div"); f.className = "fld";
+  var l = document.createElement("label"); l.textContent = labelTxt; f.appendChild(l);
+  f.appendChild(inputEl);
+  var e = document.createElement("div"); e.className = "err"; e.id = "e_"+errId; f.appendChild(e);
+  return f;
+}
+
+function input(id, ph, type) {
+  var i = document.createElement("input");
+  i.id = id; i.placeholder = ph; i.type = type || "text";
+  if (d[id]) i.value = d[id];
+  return i;
+}
+
+function makeStep1() {
+  var wrap = document.createDocumentFragment();
+  var g1 = document.createElement("div"); g1.className = "g2";
+  g1.appendChild(field("Nombre", input("nombre","Nombre"), "nombre"));
+  g1.appendChild(field("Apellidos", input("apellidos","Apellidos"), "apellidos"));
+  wrap.appendChild(g1);
+  var g2 = document.createElement("div"); g2.className = "g2";
+  g2.appendChild(field("Telefono", input("telefono","612345678","tel"), "telefono"));
+  g2.appendChild(field("Email", input("email","tu@email.com","email"), "email"));
+  wrap.appendChild(g2);
+  wrap.appendChild(field("Instituto o Colegio", input("instituto","Nombre del centro"), "instituto"));
+  var g3 = document.createElement("div"); g3.className = "g2";
+  g3.appendChild(field("Poblacion", input("poblacion","Tu ciudad"), "poblacion"));
+  var sel = document.createElement("select"); sel.id = "provincia";
+  var op0 = document.createElement("option"); op0.value=""; op0.textContent="-- Elige --"; sel.appendChild(op0);
+  for (var i=0;i<provs.length;i++) { var op=document.createElement("option"); op.value=provs[i]; op.textContent=provs[i]; if(d.provincia===provs[i]) op.selected=true; sel.appendChild(op); }
+  g3.appendChild(field("Provincia", sel, "provincia"));
+  wrap.appendChild(g3);
+  var btns = document.createElement("div"); btns.className = "btns";
+  var nx = document.createElement("button"); nx.className="bnx"; nx.textContent="Siguiente";
+  nx.onclick = function() {
+    d.nombre=document.getElementById("nombre").value;
+    d.apellidos=document.getElementById("apellidos").value;
+    d.telefono=document.getElementById("telefono").value;
+    d.email=document.getElementById("email").value;
+    d.instituto=document.getElementById("instituto").value;
+    d.poblacion=document.getElementById("poblacion").value;
+    d.provincia=document.getElementById("provincia").value;
+    var ok=true;
+    if(!d.nombre.trim()){setErr("nombre","Requerido");ok=false;} else setErr("nombre","");
+    if(!d.apellidos.trim()){setErr("apellidos","Requerido");ok=false;} else setErr("apellidos","");
+    if(!/^\d{9}$/.test(d.telefono)){setErr("telefono","9 digitos");ok=false;} else setErr("telefono","");
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)){setErr("email","Email invalido");ok=false;} else setErr("email","");
+    if(!d.instituto.trim()){setErr("instituto","Requerido");ok=false;} else setErr("instituto","");
+    if(!d.poblacion.trim()){setErr("poblacion","Requerido");ok=false;} else setErr("poblacion","");
+    if(!d.provincia){setErr("provincia","Requerido");ok=false;} else setErr("provincia","");
+    if(ok){step=2;render();}
+  };
+  btns.appendChild(nx); wrap.appendChild(btns);
+  return wrap;
+}
+
+function makeStep2() {
+  var wrap = document.createDocumentFragment();
+  var df = document.createElement("div"); df.className="fld";
+  var dl = document.createElement("label"); dl.textContent="Destino"; df.appendChild(dl);
+  var dc = document.createElement("div"); dc.className="dcards";
+  var dm = document.createElement("button"); dm.className=d.destino==="Malta"?"dcard on":"dcard";
+  dm.innerHTML = "<span class='eico'>🏛️</span><div class='nm'>Malta</div><div class='ds'>Ingles e historia</div>";
+  dm.onclick = function(){d.destino="Malta";render();};
+  var dma = document.createElement("button"); dma.className=d.destino==="Mallorca"?"dcard on":"dcard";
+  dma.innerHTML = "<span class='eico'>🏖️</span><div class='nm'>Mallorca</div><div class='ds'>Sol, mar y aventura</div>";
+  dma.onclick = function(){d.destino="Mallorca";render();};
+  dc.appendChild(dm); dc.appendChild(dma); df.appendChild(dc);
+  var ed = document.createElement("div"); ed.className="err"; ed.id="e_destino"; df.appendChild(ed);
+  wrap.appendChild(df);
+
+  var g4 = document.createElement("div"); g4.className="g2";
+  var mf = document.createElement("div"); mf.className="fld";
+  var ml = document.createElement("label"); ml.textContent="Mes"; mf.appendChild(ml);
+  var tgm = document.createElement("div"); tgm.className="tg";
+  var bj = document.createElement("button"); bj.className=d.mes==="Junio"?"tb on":"tb"; bj.textContent="Junio";
+  bj.onclick=function(){d.mes="Junio";d.semana="";render();};
+  var bjl = document.createElement("button"); bjl.className=d.mes==="Julio"?"tb on":"tb"; bjl.textContent="Julio";
+  bjl.onclick=function(){d.mes="Julio";d.semana="";render();};
+  tgm.appendChild(bj); tgm.appendChild(bjl); mf.appendChild(tgm);
+  var em = document.createElement("div"); em.className="err"; em.id="e_mes"; mf.appendChild(em);
+  g4.appendChild(mf);
+
+  var sf = document.createElement("div"); sf.className="fld";
+  var sl2 = document.createElement("label"); sl2.textContent="Semana"; sf.appendChild(sl2);
+  var ss = document.createElement("select"); ss.id="semana";
+  var so = document.createElement("option"); so.value=""; so.textContent="-- Elige --"; ss.appendChild(so);
+  if(d.mes && semsByMonth[d.mes]) { var list=semsByMonth[d.mes]; for(var k=0;k<list.length;k++){var sop=document.createElement("option");sop.value=list[k];sop.textContent=list[k];if(d.semana===list[k])sop.selected=true;ss.appendChild(sop);} }
+  sf.appendChild(ss);
+  var es = document.createElement("div"); es.className="err"; es.id="e_semana"; sf.appendChild(es);
+  g4.appendChild(sf); wrap.appendChild(g4);
+  wrap.appendChild(field("Numero de personas", input("personas","Cuantos viajais","number"), "personas"));
+
+  var btns2 = document.createElement("div"); btns2.className="btns";
+  var bk = document.createElement("button"); bk.className="bbk"; bk.textContent="Atras"; bk.onclick=function(){step=1;render();};
+  var nx2 = document.createElement("button"); nx2.className="bnx"; nx2.textContent="Siguiente";
+  nx2.onclick=function(){
+    d.personas=document.getElementById("personas").value;
+    d.semana=document.getElementById("semana").value;
+    var ok=true;
+    if(!d.destino){setErr("destino","Elige un destino");ok=false;} else setErr("destino","");
+    if(!d.mes){setErr("mes","Elige un mes");ok=false;} else setErr("mes","");
+    if(!d.semana){setErr("semana","Elige una semana");ok=false;} else setErr("semana","");
+    if(!d.personas||parseInt(d.personas)<1){setErr("personas","Minimo 1");ok=false;} else setErr("personas","");
+    if(ok){step=3;render();}
+  };
+  btns2.appendChild(bk); btns2.appendChild(nx2); wrap.appendChild(btns2);
+  return wrap;
+}
+
+function makeStep3() {
+  var wrap = document.createDocumentFragment();
+  var hf = document.createElement("div"); hf.className="fld";
+  var hl = document.createElement("label"); hl.textContent="Cuando prefieres que te contactemos"; hf.appendChild(hl);
+  var ht = document.createElement("div"); ht.className="tg";
+  var hm = document.createElement("button"); hm.className=d.horario==="Manana"?"tb on":"tb"; hm.textContent="Por la manana";
+  hm.onclick=function(){d.horario="Manana";render();};
+  var htd = document.createElement("button"); htd.className=d.horario==="Tarde"?"tb on":"tb"; htd.textContent="Por la tarde";
+  htd.onclick=function(){d.horario="Tarde";render();};
+  ht.appendChild(hm); ht.appendChild(htd); hf.appendChild(ht);
+  var eh = document.createElement("div"); eh.className="err"; eh.id="e_horario"; hf.appendChild(eh);
+  wrap.appendChild(hf);
+
+  var cf = document.createElement("div"); cf.className="fld";
+  var cl = document.createElement("label"); cl.textContent="Forma de contacto preferida"; cf.appendChild(cl);
+  var ct = document.createElement("div"); ct.className="tg";
+  var cops = ["WhatsApp","Email","Telefonica","Presencial"];
+  for(var ci=0;ci<cops.length;ci++){
+    (function(val){
+      var cb=document.createElement("button"); cb.className=d.contacto===val?"tb on":"tb"; cb.textContent=val;
+      cb.onclick=function(){d.contacto=val;render();};
+      ct.appendChild(cb);
+    })(cops[ci]);
+  }
+  cf.appendChild(ct);
+  var ec = document.createElement("div"); ec.className="err"; ec.id="e_contacto"; cf.appendChild(ec);
+  wrap.appendChild(cf);
+
+  var btns3 = document.createElement("div"); btns3.className="btns";
+  var bk2 = document.createElement("button"); bk2.className="bbk"; bk2.textContent="Atras"; bk2.onclick=function(){step=2;render();};
+  var sb = document.createElement("button"); sb.className="bnx"; sb.textContent="Enviar solicitud";
+  sb.onclick = function(){
+    var ok=true;
+    if(!d.horario){setErr("horario","Requerido");ok=false;} else setErr("horario","");
+    if(!d.contacto){setErr("contacto","Requerido");ok=false;} else setErr("contacto","");
+    if(!ok) return;
+    sb.disabled=true; sb.textContent="Enviando...";
+    d.fecha = new Date().toLocaleString("es-ES");
+    var params = Object.keys(d).map(function(k){return encodeURIComponent(k)+"="+encodeURIComponent(d[k]);}).join("&");
+    fetch(SURL+"?"+params).then(function(){showSuccess();}).catch(function(){showSuccess();});
+  };
+  btns3.appendChild(bk2); btns3.appendChild(sb); wrap.appendChild(btns3);
+  return wrap;
+}
+
+function showSuccess() {
+  document.getElementById("steps").style.display="none";
+  document.getElementById("slabel").style.display="none";
+  var fc = document.getElementById("fc");
+  fc.innerHTML = "";
+  var ok = document.createElement("div"); ok.className="okbox";
+  ok.innerHTML = "<span class='big'>🎉</span><h2>Solicitud enviada!</h2><p>Nos ponemos en contacto contigo pronto.</p><p class='di'>Destino: "+d.destino+" - "+d.mes+" - "+d.semana+"</p>";
+  var rb = document.createElement("button"); rb.className="bnx"; rb.textContent="+ Nueva solicitud";
+  rb.style.maxWidth="200px"; rb.style.margin="0 auto"; rb.style.display="block";
+  rb.onclick=function(){d={};step=1;document.getElementById("steps").style.display="flex";document.getElementById("slabel").style.display="block";render();};
+  ok.appendChild(rb); fc.appendChild(ok);
+}
+
+render();
+</script>
+</body>
+</html>
