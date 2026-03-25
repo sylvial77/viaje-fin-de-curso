@@ -78,6 +78,7 @@ var provs = ["Alava","Albacete","Alicante","Almeria","Asturias","Avila","Badajoz
 var screen = "intro";
 var step = 1;
 var d = {};
+var perfil = "";
 
 function render() {
   var card = document.getElementById("card");
@@ -94,11 +95,11 @@ function renderIntro(card) {
   var b1 = document.createElement("button");
   b1.className = "bnx"; b1.textContent = "¡Quiero ser organizador! 🚀";
   b1.style.width = "100%"; b1.style.fontSize = "16px"; b1.style.padding = "16px";
-  b1.onclick = function() { screen = "form"; step = 1; render(); };
+  b1.onclick = function() { perfil = "Organizador"; screen = "form"; step = 1; render(); };
   var b2 = document.createElement("button");
   b2.className = "bbk"; b2.textContent = "Solo quiero información";
   b2.style.width = "100%"; b2.style.marginTop = "10px";
-  b2.onclick = function() { screen = "form"; step = 1; render(); };
+  b2.onclick = function() { perfil = "Informacion"; screen = "form"; step = 1; render(); };
   div.appendChild(b1); div.appendChild(b2);
   card.appendChild(div);
 }
