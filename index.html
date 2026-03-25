@@ -66,8 +66,8 @@ body{min-height:100vh;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e)
 <div class="blob2"></div>
 <div class="wrap">
   <div class="logos">
-    <img src="logo1.png" alt="Logo M"/>
-    <img src="logo2.png" alt="Logo TFDC"/>
+    <img src="logo1.png" alt="Logo M" style="width:80px;height:80px;object-fit:contain"/>
+    <img src="logo2.png" alt="Logo TFDC" style="width:80px;height:80px;object-fit:contain"/>
   </div>
   <div class="card" id="card"></div>
   <div class="foot">2026 Tu Viaje Fin de Curso</div>
@@ -202,10 +202,10 @@ function renderForm(card) {
     var dl = document.createElement("label"); dl.textContent="Destino"; df.appendChild(dl);
     var dc = document.createElement("div"); dc.className="dcards";
     var dm = document.createElement("button"); dm.className=d.destino==="Malta"?"dcard on":"dcard";
-    dm.innerHTML="<span class='eico'>🏛️</span><div class='nm'>Malta</div><div class='ds'>Ingles e historia</div>";
+    dm.innerHTML="<span class='eico'>🏛️</span><div class='nm'>Malta</div>";
     dm.onclick=function(){d.destino="Malta";render();};
     var dma = document.createElement("button"); dma.className=d.destino==="Mallorca"?"dcard on":"dcard";
-    dma.innerHTML="<span class='eico'>🏖️</span><div class='nm'>Mallorca</div><div class='ds'>Sol, mar y aventura</div>";
+    dma.innerHTML="<span class='eico'>🏖️</span><div class='nm'>Mallorca</div>";
     dma.onclick=function(){d.destino="Mallorca";render();};
     dc.appendChild(dm); dc.appendChild(dma); df.appendChild(dc);
     var edd=document.createElement("div"); edd.className="err"; edd.id="e_destino"; df.appendChild(edd);
@@ -236,8 +236,8 @@ function renderForm(card) {
     var hf=document.createElement("div"); hf.className="fld";
     var hl=document.createElement("label"); hl.textContent="Cuando prefieres que te contactemos"; hf.appendChild(hl);
     var ht=document.createElement("div"); ht.className="tg";
-    ht.appendChild(tb("Por la manana","Manana","horario"));
-    ht.appendChild(tb("Por la tarde","Tarde","horario"));
+    ht.appendChild(tb("Por la Mañana","Manana","horario"));
+    ht.appendChild(tb("Por la Tarde","Tarde","horario"));
     hf.appendChild(ht);
     var eh=document.createElement("div"); eh.className="err"; eh.id="e_horario"; hf.appendChild(eh);
     card.appendChild(hf);
