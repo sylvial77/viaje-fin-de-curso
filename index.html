@@ -1,176 +1,283 @@
-var CALENDAR_ID = "f3c1909d6ab042be8a70e5af877c9aa948ef9cc185f7335887c98cad6a903a8f@group.calendar.google.com";
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Tu Viaje Fin de Curso</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:linear-gradient(135deg,#0f0c29,#302b63,#24243e);font-family:'Segoe UI',sans-serif;display:flex;align-items:center;justify-content:center;padding:20px}
+.blob1{position:fixed;top:10%;left:5%;width:300px;height:300px;background:rgba(139,92,246,.2);border-radius:50%;filter:blur(80px);pointer-events:none}
+.blob2{position:fixed;bottom:10%;right:5%;width:400px;height:400px;background:rgba(236,72,153,.15);border-radius:50%;filter:blur(80px);pointer-events:none}
+.wrap{position:relative;width:100%;max-width:500px}
+.logos{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:24px}
+.logos img{width:80px;height:80px;object-fit:contain}
+.card{background:rgba(255,255,255,.05);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:26px;box-shadow:0 25px 50px rgba(0,0,0,.4)}
+.sc{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;background:rgba(255,255,255,.1);color:rgba(255,255,255,.3);transition:all .3s}
+.sc.on{background:linear-gradient(135deg,#8b5cf6,#ec4899);color:#fff;box-shadow:0 4px 15px rgba(139,92,246,.4)}
+.sl{flex:1;height:2px;background:rgba(255,255,255,.1);transition:all .3s}
+.sl.on{background:linear-gradient(90deg,#8b5cf6,#ec4899)}
+.steps{display:flex;align-items:center;gap:6px;margin-bottom:18px}
+.slabel{color:rgba(255,255,255,.4);font-size:11px;text-transform:uppercase;letter-spacing:2px;margin-bottom:18px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fld{margin-bottom:14px}
+.fld label{color:rgba(255,255,255,.6);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;display:block;margin-bottom:6px}
+.fld input,.fld select{width:100%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:12px 16px;color:#fff;font-size:14px;outline:none;transition:all .2s}
+.fld input::placeholder{color:rgba(255,255,255,.35)}
+.fld input:focus,.fld select:focus{border-color:#8b5cf6;background:rgba(255,255,255,.15)}
+.fld select option{color:#111;background:#fff}
+.err{color:#f472b6;font-size:12px;margin-top:4px;min-height:16px}
+.dcards{display:flex;gap:12px;margin-top:6px}
+.dcard{flex:1;border-radius:16px;padding:16px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);cursor:pointer;text-align:left;color:#fff;transition:all .2s}
+.dcard:hover{background:rgba(255,255,255,.13)}
+.dcard.on{background:linear-gradient(135deg,rgba(139,92,246,.4),rgba(236,72,153,.3));border-color:#8b5cf6}
+.dcard .eico{font-size:26px;margin-bottom:6px;display:block}
+.dcard .nm{font-weight:700;font-size:15px}
+.tg{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.tb{padding:10px 18px;border-radius:12px;font-size:13px;font-weight:500;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);cursor:pointer;transition:all .2s}
+.tb:hover{background:rgba(255,255,255,.15)}
+.tb.on{background:#8b5cf6;border-color:#8b5cf6;color:#fff;box-shadow:0 4px 15px rgba(139,92,246,.4)}
+.btns{display:flex;gap:10px;margin-top:22px}
+.bbk{flex:1;padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,.2);background:transparent;color:rgba(255,255,255,.7);font-size:14px;cursor:pointer}
+.bnx{flex:1;padding:14px;border-radius:12px;background:linear-gradient(135deg,#8b5cf6,#ec4899);border:none;color:#fff;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 4px 20px rgba(139,92,246,.4)}
+.bnx:hover{transform:scale(1.02)}
+.rgpd-box{margin-top:16px;padding:14px;background:rgba(255,255,255,.05);border-radius:12px;border:1px solid rgba(255,255,255,.1)}
+.rgpd-box label{display:flex;align-items:flex-start;gap:10px;cursor:pointer}
+.rgpd-box input[type=checkbox]{margin-top:3px;accent-color:#8b5cf6;width:16px;height:16px;flex-shrink:0}
+.rgpd-box span{color:rgba(255,255,255,.6);font-size:12px;line-height:1.5}
+.rgpd-box strong{color:#fff}
+.rgpd-box a{color:#a78bfa}
+.okbox{text-align:center;padding:20px 0}
+.okbox .big{font-size:54px;margin-bottom:10px;display:block}
+.okbox h2{color:#fff;font-size:22px;font-weight:900;margin-bottom:8px}
+.okbox p{color:rgba(255,255,255,.5);font-size:14px;margin-bottom:6px}
+.okbox .di{color:#a78bfa;font-size:14px;font-weight:600;margin-bottom:20px}
+.intro-card{text-align:center;padding:10px 0 20px}
+.intro-card .ico{font-size:44px;margin-bottom:12px;display:block}
+.intro-card h1{color:#fff;font-size:24px;font-weight:900;margin-bottom:12px}
+.intro-card p{color:rgba(255,255,255,.6);font-size:15px;line-height:1.6;margin-bottom:28px}
+.foot{text-align:center;color:rgba(255,255,255,.2);font-size:12px;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="blob1"></div>
+<div class="blob2"></div>
+<div class="wrap">
+  <div class="logos">
+    <img src="logo1.png" alt="Logo M" style="width:80px;height:80px;object-fit:contain"/>
+    <img src="logo2.png" alt="Logo TFDC" style="width:80px;height:80px;object-fit:contain"/>
+  </div>
+  <div class="card" id="card"></div>
+  <div class="foot">2026 Tu Viaje Fin de Curso</div>
+</div>
+<script>
+var SURL = "https://script.google.com/macros/s/AKfycbzt_yyqLtOinfCsiJk2r-_W0Zd55PI2mLCWjRZw8vCJwjbloDezDsx5r1oOQ8NmUlSY/exec";
+var provs = ["Alava","Albacete","Alicante","Almeria","Asturias","Avila","Badajoz","Barcelona","Burgos","Caceres","Cadiz","Cantabria","Castellon","Ciudad Real","Cordoba","Cuenca","Girona","Granada","Guadalajara","Guipuzcoa","Huelva","Huesca","Islas Baleares","Jaen","La Coruna","La Rioja","Las Palmas","Leon","Lleida","Lugo","Madrid","Malaga","Murcia","Navarra","Ourense","Palencia","Pontevedra","Salamanca","Sta Cruz Tenerife","Segovia","Sevilla","Soria","Tarragona","Teruel","Toledo","Valencia","Valladolid","Vizcaya","Zamora","Zaragoza"];
+var screen = "intro";
+var step = 1;
+var d = {};
+var perfil = "";
 
-function getColorComercial(comercial) {
-  var nombre = comercial.toString().trim().toUpperCase();
-  if (nombre === "DIEGO") return "11";
-  if (nombre === "LUCIA") return "7";
-  if (nombre === "YAHYA") return "10";
-  if (nombre === "PAUL") return "5";
-  if (nombre === "RUBEN") return "6";
-  if (nombre === "IZAN") return "9";
-  return "1";
+function render() {
+  var card = document.getElementById("card");
+  card.innerHTML = "";
+  if (screen === "intro") renderIntro(card);
+  else if (screen === "form") renderForm(card);
+  else renderDone(card);
 }
 
-function doGet(e) {
-  try {
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    var p = e.parameter;
-    sheet.appendRow([
-      p.fecha, p.perfil, p.nombre, p.apellidos, p.telefono, p.email,
-      p.instituto, p.poblacion, p.provincia, p.destino,
-      p.mes, p.personas, p.horario, p.contacto,
-      "", "", "", "", "", ""
-    ]);
-    return ContentService
-      .createTextOutput(JSON.stringify({ result: "success" }))
-      .setMimeType(ContentService.MimeType.JSON);
-  } catch (err) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ result: "error", message: err.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
+function renderIntro(card) {
+  var div = document.createElement("div");
+  div.className = "intro-card";
+  div.innerHTML = "<span class='ico'>✈️</span><h1>Tu Viaje Fin de Curso</h1><p>¿Quieres ser el <strong style='color:#a78bfa'>organizador del viaje de fin de curso</strong> de tu centro?<br><br>Rellena el formulario y nos ponemos en contacto contigo para darte toda la información.</p>";
+  var b1 = document.createElement("button");
+  b1.className = "bnx"; b1.textContent = "¡Quiero ser organizador! 🚀";
+  b1.style.width = "100%"; b1.style.fontSize = "16px"; b1.style.padding = "16px";
+  b1.onclick = function() { perfil = "Organizador"; screen = "form"; step = 1; d = {}; render(); };
+  var b2 = document.createElement("button");
+  b2.className = "bbk"; b2.textContent = "Solo quiero información";
+  b2.style.width = "100%"; b2.style.marginTop = "10px";
+  b2.onclick = function() { perfil = "Informacion"; screen = "form"; step = 1; d = {}; render(); };
+  div.appendChild(b1); div.appendChild(b2);
+  card.appendChild(div);
 }
 
-function doPost(e) {
-  try {
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-    var data = JSON.parse(e.postData.contents);
-    sheet.appendRow([
-      data.fecha, data.perfil, data.nombre, data.apellidos, data.telefono, data.email,
-      data.instituto, data.poblacion, data.provincia, data.destino,
-      data.mes, data.personas, data.horario, data.contacto,
-      "", "", "", "", "", ""
-    ]);
-    return ContentService
-      .createTextOutput(JSON.stringify({ result: "success" }))
-      .setMimeType(ContentService.MimeType.JSON);
-  } catch (err) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ result: "error", message: err.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
-  }
+function renderDone(card) {
+  card.innerHTML = "<div class='okbox'><span class='big'>🎉</span><h2>Solicitud enviada!</h2><p>Nos ponemos en contacto contigo pronto.</p><p class='di'>Destino: " + (d.destino||"") + " - " + (d.mes||"") + "</p></div>";
+  var rb = document.createElement("button");
+  rb.className = "bnx"; rb.textContent = "+ Nueva solicitud";
+  rb.style.maxWidth = "200px"; rb.style.margin = "0 auto"; rb.style.display = "block";
+  rb.onclick = function() { screen = "intro"; d = {}; perfil = ""; step = 1; render(); };
+  card.querySelector(".okbox").appendChild(rb);
 }
 
-function onEditTrigger(e) {
-  var sheet = e.source.getActiveSheet();
-  var range = e.range;
-  var col = range.getColumn();
-  var row = range.getRow();
-  if (row <= 1) return;
-  var citaAgendada = sheet.getRange(row, 18).getDisplayValue().toString().trim().toUpperCase();
-  var eventoId = sheet.getRange(row, 21).getValue().toString().trim();
-  if (col === 18 || col === 19 || col === 20) {
-    if (citaAgendada === "SI") {
-      var fechaCita = sheet.getRange(row, 19).getValue();
-      if (fechaCita) {
-        if (eventoId) {
-          borrarEventoPorId(eventoId);
-          sheet.getRange(row, 21).setValue("");
-        }
-        crearEvento(sheet, row, fechaCita);
-      }
-    } else {
-      if (eventoId) {
-        borrarEventoPorId(eventoId);
-        sheet.getRange(row, 21).setValue("");
-      }
+function updSteps(card) {
+  var labs = ["","Tus datos","Tu viaje","Contacto"];
+  var stepsDiv = document.createElement("div"); stepsDiv.className = "steps";
+  for (var i = 1; i <= 3; i++) {
+    var sc = document.createElement("div");
+    sc.className = step >= i ? "sc on" : "sc";
+    sc.textContent = i;
+    stepsDiv.appendChild(sc);
+    if (i < 3) {
+      var sl = document.createElement("div");
+      sl.className = step > i ? "sl on" : "sl";
+      stepsDiv.appendChild(sl);
     }
   }
+  card.appendChild(stepsDiv);
+  var lbl = document.createElement("div"); lbl.className = "slabel"; lbl.textContent = labs[step];
+  card.appendChild(lbl);
 }
 
-function borrarEventoPorId(eventoId) {
-  try {
-    var calendar = CalendarApp.getCalendarById(CALENDAR_ID);
-    var evento = calendar.getEventById(eventoId);
-    if (evento) {
-      evento.deleteEvent();
-      Logger.log("Evento borrado: " + eventoId);
-    }
-  } catch (err) {
-    Logger.log("Error al borrar evento: " + err.toString());
+function fld(labelTxt, inputEl, errId) {
+  var f = document.createElement("div"); f.className = "fld";
+  var l = document.createElement("label"); l.textContent = labelTxt; f.appendChild(l);
+  f.appendChild(inputEl);
+  var e = document.createElement("div"); e.className = "err"; e.id = "e_"+errId; f.appendChild(e);
+  return f;
+}
+
+function inp(id, ph, type) {
+  var i = document.createElement("input");
+  i.id = id; i.placeholder = ph; i.type = type || "text";
+  if (d[id]) i.value = d[id];
+  return i;
+}
+
+function setErr(id, msg) { var e = document.getElementById("e_"+id); if(e) e.textContent = msg||""; }
+
+function tb(label, val, key) {
+  var b = document.createElement("button");
+  b.className = d[key] === val ? "tb on" : "tb";
+  b.textContent = label;
+  b.onclick = function() { d[key] = val; render(); };
+  return b;
+}
+
+function renderForm(card) {
+  updSteps(card);
+  if (step === 1) {
+    var g1 = document.createElement("div"); g1.className = "g2";
+    g1.appendChild(fld("Nombre", inp("nombre","Nombre"), "nombre"));
+    g1.appendChild(fld("Apellidos", inp("apellidos","Apellidos"), "apellidos"));
+    card.appendChild(g1);
+    var g2 = document.createElement("div"); g2.className = "g2";
+    g2.appendChild(fld("Telefono", inp("telefono","612345678","tel"), "telefono"));
+    g2.appendChild(fld("Email", inp("email","tu@email.com","email"), "email"));
+    card.appendChild(g2);
+    card.appendChild(fld("Instituto o Colegio", inp("instituto","Nombre del centro"), "instituto"));
+    var g3 = document.createElement("div"); g3.className = "g2";
+    g3.appendChild(fld("Poblacion", inp("poblacion","Tu ciudad"), "poblacion"));
+    var sel = document.createElement("select"); sel.id = "provincia";
+    var op0 = document.createElement("option"); op0.value=""; op0.textContent="-- Elige --"; sel.appendChild(op0);
+    for (var i=0;i<provs.length;i++){var op=document.createElement("option");op.value=provs[i];op.textContent=provs[i];if(d.provincia===provs[i])op.selected=true;sel.appendChild(op);}
+    g3.appendChild(fld("Provincia", sel, "provincia"));
+    card.appendChild(g3);
+    var btns = document.createElement("div"); btns.className = "btns";
+    var nx = document.createElement("button"); nx.className="bnx"; nx.textContent="Siguiente";
+    nx.onclick = function() {
+      d.nombre=document.getElementById("nombre").value;
+      d.apellidos=document.getElementById("apellidos").value;
+      d.telefono=document.getElementById("telefono").value;
+      d.email=document.getElementById("email").value;
+      d.instituto=document.getElementById("instituto").value;
+      d.poblacion=document.getElementById("poblacion").value;
+      d.provincia=document.getElementById("provincia").value;
+      var ok=true;
+      if(!d.nombre.trim()){setErr("nombre","Requerido");ok=false;} else setErr("nombre","");
+      if(!d.apellidos.trim()){setErr("apellidos","Requerido");ok=false;} else setErr("apellidos","");
+      if(!/^\d{9}$/.test(d.telefono)){setErr("telefono","9 digitos");ok=false;} else setErr("telefono","");
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(d.email)){setErr("email","Email invalido");ok=false;} else setErr("email","");
+      if(!d.instituto.trim()){setErr("instituto","Requerido");ok=false;} else setErr("instituto","");
+      if(!d.poblacion.trim()){setErr("poblacion","Requerido");ok=false;} else setErr("poblacion","");
+      if(!d.provincia){setErr("provincia","Requerido");ok=false;} else setErr("provincia","");
+      if(ok){step=2;render();}
+    };
+    btns.appendChild(nx); card.appendChild(btns);
+
+  } else if (step === 2) {
+    var df = document.createElement("div"); df.className="fld";
+    var dl = document.createElement("label"); dl.textContent="Destino"; df.appendChild(dl);
+    var dc = document.createElement("div"); dc.className="dcards";
+    var dm = document.createElement("button"); dm.className=d.destino==="Malta"?"dcard on":"dcard";
+    dm.innerHTML="<span class='eico'>🏛️</span><div class='nm'>Malta</div>";
+    dm.onclick=function(){d.destino="Malta";render();};
+    var dma = document.createElement("button"); dma.className=d.destino==="Mallorca"?"dcard on":"dcard";
+    dma.innerHTML="<span class='eico'>🏖️</span><div class='nm'>Mallorca</div>";
+    dma.onclick=function(){d.destino="Mallorca";render();};
+    dc.appendChild(dm); dc.appendChild(dma); df.appendChild(dc);
+    var edd=document.createElement("div"); edd.className="err"; edd.id="e_destino"; df.appendChild(edd);
+    card.appendChild(df);
+    var mf = document.createElement("div"); mf.className="fld";
+    var ml = document.createElement("label"); ml.textContent="Mes"; mf.appendChild(ml);
+    var tgm = document.createElement("div"); tgm.className="tg";
+    tgm.appendChild(tb("Junio","Junio","mes"));
+    tgm.appendChild(tb("Julio","Julio","mes"));
+    mf.appendChild(tgm);
+    var em=document.createElement("div"); em.className="err"; em.id="e_mes"; mf.appendChild(em);
+    card.appendChild(mf);
+    card.appendChild(fld("Numero de personas", inp("personas","Cuantos viajais","number"), "personas"));
+    var btns2=document.createElement("div"); btns2.className="btns";
+    var bk=document.createElement("button"); bk.className="bbk"; bk.textContent="Atras"; bk.onclick=function(){step=1;render();};
+    var nx2=document.createElement("button"); nx2.className="bnx"; nx2.textContent="Siguiente";
+    nx2.onclick=function(){
+      d.personas=document.getElementById("personas").value;
+      var ok=true;
+      if(!d.destino){setErr("destino","Elige un destino");ok=false;} else setErr("destino","");
+      if(!d.mes){setErr("mes","Elige un mes");ok=false;} else setErr("mes","");
+      if(!d.personas||parseInt(d.personas)<1){setErr("personas","Minimo 1");ok=false;} else setErr("personas","");
+      if(ok){step=3;render();}
+    };
+    btns2.appendChild(bk); btns2.appendChild(nx2); card.appendChild(btns2);
+
+  } else if (step === 3) {
+    var hf=document.createElement("div"); hf.className="fld";
+    var hl=document.createElement("label"); hl.textContent="Cuando prefieres que te contactemos"; hf.appendChild(hl);
+    var ht=document.createElement("div"); ht.className="tg";
+    ht.appendChild(tb("Por la Manana","Manana","horario"));
+    ht.appendChild(tb("Por la Tarde","Tarde","horario"));
+    hf.appendChild(ht);
+    var eh=document.createElement("div"); eh.className="err"; eh.id="e_horario"; hf.appendChild(eh);
+    card.appendChild(hf);
+    var cf=document.createElement("div"); cf.className="fld";
+    var cl=document.createElement("label"); cl.textContent="Forma de contacto preferida"; cf.appendChild(cl);
+    var ct=document.createElement("div"); ct.className="tg";
+    ct.appendChild(tb("WhatsApp","WhatsApp","contacto"));
+    ct.appendChild(tb("Email","Email","contacto"));
+    ct.appendChild(tb("Telefonica","Telefonica","contacto"));
+    ct.appendChild(tb("Presencial","Presencial","contacto"));
+    cf.appendChild(ct);
+    var ec=document.createElement("div"); ec.className="err"; ec.id="e_contacto"; cf.appendChild(ec);
+    card.appendChild(cf);
+    var rgpdBox=document.createElement("div"); rgpdBox.className="rgpd-box";
+    var rgpdLabel=document.createElement("label");
+    var rgpdCheck=document.createElement("input"); rgpdCheck.type="checkbox"; rgpdCheck.id="rgpd";
+    var rgpdSpan=document.createElement("span");
+    rgpdSpan.innerHTML="He leido y acepto la politica de privacidad. Los datos facilitados seran tratados por <strong>Crystal District, S.L.</strong> con la finalidad de gestionar tu solicitud de informacion sobre viajes de fin de curso. No se cederan a terceros. Puedes ejercer tus derechos escribiendo a <a href='mailto:hello@momentumlight.es'>hello@momentumlight.es</a>";
+    rgpdLabel.appendChild(rgpdCheck); rgpdLabel.appendChild(rgpdSpan); rgpdBox.appendChild(rgpdLabel);
+    var ergpd=document.createElement("div"); ergpd.className="err"; ergpd.id="e_rgpd"; rgpdBox.appendChild(ergpd);
+    card.appendChild(rgpdBox);
+    var btns3=document.createElement("div"); btns3.className="btns";
+    var bk2=document.createElement("button"); bk2.className="bbk"; bk2.textContent="Atras"; bk2.onclick=function(){step=2;render();};
+    var sb=document.createElement("button"); sb.className="bnx"; sb.textContent="Enviar solicitud";
+    sb.onclick=function(){
+      var ok=true;
+      if(!d.horario){setErr("horario","Requerido");ok=false;} else setErr("horario","");
+      if(!d.contacto){setErr("contacto","Requerido");ok=false;} else setErr("contacto","");
+      if(!document.getElementById("rgpd").checked){setErr("rgpd","Debes aceptar la politica de privacidad");ok=false;} else setErr("rgpd","");
+      if(!ok) return;
+      sb.disabled=true; sb.textContent="Enviando...";
+      d.fecha=new Date().toLocaleString("es-ES");
+      d.perfil=perfil;
+      var params=Object.keys(d).map(function(k){return encodeURIComponent(k)+"="+encodeURIComponent(d[k]);}).join("&");
+      fetch(SURL+"?"+params).then(function(){screen="done";render();}).catch(function(){screen="done";render();});
+    };
+    btns3.appendChild(bk2); btns3.appendChild(sb); card.appendChild(btns3);
   }
 }
 
-function construirFecha(fechaCita, horaReunion) {
-  var fecha = new Date(fechaCita);
-  fecha.setHours(9, 0, 0, 0);
-  if (horaReunion && horaReunion.indexOf(":") > -1) {
-    var partes = horaReunion.split(":");
-    fecha.setHours(parseInt(partes[0]), parseInt(partes[1]), 0, 0);
-  }
-  return fecha;
-}
-
-function crearEvento(sheet, row, fechaCita) {
-  try {
-    var nombre = sheet.getRange(row, 3).getValue();
-    var apellidos = sheet.getRange(row, 4).getValue();
-    var instituto = sheet.getRange(row, 7).getValue();
-    var telefono = sheet.getRange(row, 5).getValue();
-    var email = sheet.getRange(row, 6).getValue();
-    var destino = sheet.getRange(row, 10).getValue();
-    var comercial = sheet.getRange(row, 17).getValue();
-    var zonaComercial = sheet.getRange(row, 16).getValue();
-    var horaReunion = sheet.getRange(row, 20).getDisplayValue();
-    var fecha = construirFecha(fechaCita, horaReunion);
-    var fechaFin = new Date(fecha.getTime() + 60 * 60 * 1000);
-    var titulo = "Cita: " + instituto + " - " + nombre + " " + apellidos;
-    var descripcion =
-      "Instituto: " + instituto + "\n" +
-      "Contacto: " + nombre + " " + apellidos + "\n" +
-      "Telefono: " + telefono + "\n" +
-      "Email: " + email + "\n" +
-      "Destino: " + destino + "\n" +
-      "Comercial: " + comercial + "\n" +
-      "Zona: " + zonaComercial;
-    var calendar = CalendarApp.getCalendarById(CALENDAR_ID);
-    var evento = calendar.createEvent(titulo, fecha, fechaFin, { description: descripcion });
-    evento.setColor(getColorComercial(comercial));
-    sheet.getRange(row, 21).setValue(evento.getId());
-    Logger.log("Evento creado: " + titulo);
-  } catch (err) {
-    Logger.log("Error al crear evento: " + err.toString());
-  }
-}
-
-function testPerfil() {
-  var fakeE = {
-    parameter: {
-      fecha: "25/03/2026",
-      perfil: "Organizador",
-      nombre: "Test",
-      apellidos: "Prueba",
-      telefono: "612345678",
-      email: "test@test.com",
-      instituto: "IES Test",
-      poblacion: "Madrid",
-      provincia: "Madrid",
-      destino: "Malta",
-      mes: "Junio",
-      personas: "10",
-      horario: "Manana",
-      contacto: "WhatsApp"
-    }
-  };
-  doGet(fakeE);
-  Logger.log("Test completado");
-}
-
-function testCalendario() {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  crearEvento(sheet, 2, new Date());
-}
-
-function crearActivador() {
-  var triggers = ScriptApp.getProjectTriggers();
-  for (var i = 0; i < triggers.length; i++) {
-    if (triggers[i].getHandlerFunction() === "onEditTrigger") {
-      ScriptApp.deleteTrigger(triggers[i]);
-    }
-  }
-  ScriptApp.newTrigger("onEditTrigger")
-    .forSpreadsheet(SpreadsheetApp.getActiveSpreadsheet())
-    .onEdit()
-    .create();
-  Logger.log("Activador creado correctamente");
-}
+render();
+</script>
+</body>
+</html>
